@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { allMovies } from "../services/movies";
 
 function SWMovies() {
   const [number, setNumber] = React.useState(1);
@@ -29,8 +30,8 @@ function SWMovies() {
     <div>
       <h1>Pick a Movie</h1>
       <h4>You chose: {number}</h4>
-      <h3>{movie.title}</h3>
-      <h5>{movie.director}</h5>
+      <h3>Title: {movie.title}</h3>
+      <h5>Director: {movie.director}</h5>
       {movie.characters === undefined
         ? "hola"
         : movie.characters.forEach(char => {

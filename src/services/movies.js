@@ -1,4 +1,4 @@
-const API_ALL_MOVIES = "https://swapi.co/api/films/";
+const API_ALL_MOVIES = `https://swapi.co/api/films/`;
 
 async function allMovies() {
   const listMovies = await fetch(API_ALL_MOVIES, {
@@ -6,3 +6,5 @@ async function allMovies() {
   }).then(response => response.json());
   return listMovies;
 }
+
+export { allMovies };
