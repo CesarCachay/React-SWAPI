@@ -1,20 +1,11 @@
 import React from "react";
 import axios from "axios";
-import { allMovies } from "../services/movies";
+import { allMovies, getFilm } from "../services/movies";
 
 function SWMovies() {
   const [number, setNumber] = React.useState(1);
   const [movie, setMovie] = React.useState("");
   const [char, setChar] = React.useState("");
-
-  React.useEffect(() => {
-    async function fetchData() {
-      const response = await axios.get(`https://swapi.co/api/films/${number}`);
-      setMovie(response.data);
-      console.log(movie.characters);
-    }
-    fetchData();
-  }, [number]);
 
   React.useEffect(() => {
     async function getChars() {
@@ -24,6 +15,22 @@ function SWMovies() {
       setChar(charResponse.data);
     }
     getChars();
+  }, [number]);
+
+  React.useEffect(() => {
+    async function fetchData() {
+      const data = await getFilm(number);
+      setMovie(data);
+      Promise.all(
+        data.characters.map(async url => {
+          const { data } = await axios.get(url);
+          return data;
+        })
+      ).then(result => {
+        console.log(result);
+      });
+    }
+    fetchData();
   }, [number]);
 
   return (
